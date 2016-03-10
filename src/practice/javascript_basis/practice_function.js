@@ -227,8 +227,79 @@ var fct2 = eval(fctStr2);  // return a function
 
 console.log(fct2());
 
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions
+console.log("***************          Method definitions          **********************");
+var obj = {
+  foo: function() {},
+  bar: function() {}
+};
 
+// works as well now
+var obj = {
+  foo() {},
+  bar() {}
+};
 
+// Using a named property (pre-ES6)
+var obj2 = {
+  g: function*() {
+    var index = 0;
+    while(true)
+      yield index++;
+  }
+};
+
+// The same object using shorthand syntax
+var obj2 = { 
+  * g() {
+    var index = 0;
+    while(true)
+      yield index++;
+  }
+};
+
+var it = obj2.g();
+console.log(it.next().value); // 0
+console.log(it.next().value); // 1
+
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
+console.log("***************   function*  ***********************");
+console.log("Calling a generator function does not execute its body immediately; an iterator object for the function is returned instead. When the iterator's next() method is called, the generator function's body is executed until the first yield expression, which specifies the value to be returned from the iterator or, with yield*, delegates to another generator function. The next() method returns an object with a value property containing the yielded value and a done property which indicates whether the generator has yielded its last value.");
+
+function* idMaker(){
+  var index = 0;
+  while(index < 3)
+    yield index++;
+}
+
+var gen = idMaker();
+
+console.log(gen.next().value); // 0
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+console.log(gen.next().value); // undefined
+
+console.log("***********    Example with yield*      *******************");
+
+function* anotherGenerator(i) {
+  yield i + 1;
+  yield i + 2;
+  yield i + 3;
+}
+
+function* generator(i){
+  yield i;
+  yield* anotherGenerator(i);
+  yield i + 10;
+}
+
+var gen = generator(10);
+
+console.log(gen.next().value); // 10
+console.log(gen.next().value); // 11
+console.log(gen.next().value); // 12
+console.log(gen.next().value); // 13
+console.log(gen.next().value); // 20
 
 
 

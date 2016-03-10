@@ -12,7 +12,22 @@ console.log(i++ + ".answer=== NaN\n"+(answer === NaN));
 console.log(i++ + ".answer== null\n"+(answer == null));
 console.log(i++ + ".answer== undefined\n"+(answer == undefined));
 console.log(i++ + ".answer== NaN\n"+(answer == NaN));
-/*******************************************/
+console.log("*********************get into the definition of object,function,object*********************************************");
+console.log("typeof 12 = " + (typeof 12)); // number
+console.log("typeof (new Number()) = " + ( typeof (new Number()) ) ); //object
+console.log("typeof '12' = " + (typeof "12")); // function
+console.log("typeof (new String()) = " + ( typeof (new String()) ) );
+console.log("typeof [] = " + (typeof [])); // object
+console.log("typeof (new Array()) = " + ( typeof (new Array()) ) ); //object
+
+console.log("typeof Date = " + (typeof Date)); // function
+console.log("typeof (new Date()) = " + (typeof (new Date()))); //object
+console.log("typeof undefined = " + (typeof undefined)); // undefined
+console.log("typeof null = " + (typeof null)); // object
+console.log("typeof NaN = " + (typeof NaN));
+
+console.log("*****************************************************************");
+
 console.log("Data type conversion");
 answer = 42;
 console.log("answer = " + answer);
