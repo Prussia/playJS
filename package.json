@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/Prussia/playJS/issues"
   },
-  "homepage": "https://github.com/Prussia/playJS#readme"
+  "homepage": "https://github.com/Prussia/playJS#readme",
+  "dependencies": {
+    "requirejs": "^2.1.22"
+  }
 }

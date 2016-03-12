@@ -175,13 +175,65 @@ console.log(square);
 
 
 
-console.log("******   Example of inheritance    ******");
+console.log("\n\n******   Example of inheritance    ******\n \n");
 
-function A(a){
-
+function SuperA(a){
+  this.varA = a;
 }
 
-console.log("******   Creating the hierarchy    ******");
+// What is the purpose of including varA in the prototype when A.prototype.varA will always be shadowed by
+// this.varA, given the definition of function A above?
+SuperA.prototype = {
+  varA : null,  // Shouldn't we strike varA from the prototype as doing nothing?
+      // perhaps intended as an optimization to allocate space in hidden classes?
+      // https://developers.google.com/speed/articles/optimizing-javascript#Initializing instance variables
+      // would be valid if varA wasn't being initialized uniquely for each instance
+  doSomething : function(){
+    // ...
+    console.log("I am SuperA doSomething method");
+  }
+};
+
+function SubB(a, b){
+  SuperA.call(this, a);
+  this.varB = b;
+}
+SubB.prototype = Object.create(SuperA.prototype, {
+  varB : {
+    value: null, 
+    enumerable: true, 
+    configurable: true, 
+    writable: true 
+  },
+  doSomething : { 
+    value: function(){ // override
+      SuperA.prototype.doSomething.apply(this, arguments); // call super
+      // ...
+      console.log("I am SubB doSomething method");
+    },
+    enumerable: true,
+    configurable: true, 
+    writable: true
+  }
+});
+SubB.prototype.constructor = SubB;
+
+var subBValue = new SubB("A","B");
+console.log("invoke subBValue.doSomething");
+subBValue.doSomething();
+console.log("\n");
+var superAValue = new SuperA("a");
+console.log("invoke superAValue.doSomething");
+superAValue.doSomething();
+console.log("\n");
+
+console.log("superAValue = ");
+console.log(superAValue);
+console.log("subBValue = ");
+console.log(subBValue);
+
+
+console.log("\n \n******   Creating the hierarchy    ******");
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Details_of_the_Object_Model
 function Employee() {
   this.name = "";
@@ -224,5 +276,23 @@ var engineer = new Engineer();
 console.log(engineer);
 
 
-console.log("******   With a constructor    ******");
-console.log("******   With a constructor    ******");
+console.log("******   prototype and Object.getPrototypeOf    ******");
+console.log("when you call");
+
+console.log("var o = new Foo();");
+
+console.log(" JavaScript actually just does ");
+
+console.log("var o = new Object()");
+console.log("o.[[Prototype]] = Foo.prototype");
+console.log("Foo.call(o);");
+console.log("\n\nThese are what is in my mind.");
+console.log("I think it is the implementation of prototype design pattern.");
+console.log("1. check if the o has the property");
+console.log("2. check if the prototype of o has the property");
+console.log("3. check if the sub prototype of o has the property");
+console.log("4. and so on ");
+
+
+console.log("\n\n******   In conclusion    ******");
+console.log("It is essential to understand the prototypal inheritance model before writing complex code that makes use of it. Also, be aware of the length of the prototype chains in your code and break them up if necessary to avoid possible performance problems. Further, the native prototypes should never be extended unless it is for the sake of compatibility with newer JavaScript features.");
