@@ -1,6 +1,13 @@
 'use strict';
 
 console.log("**************************************************************");
+<<<<<<< HEAD
+=======
+console.log("Exception handling statements");
+console.log("**************************************************************");
+
+console.log("**************************************************************");
+>>>>>>> branch 'master' of https://github.com/Prussia/playJS
 console.log("Promises");
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 console.log("**************************************************************");
