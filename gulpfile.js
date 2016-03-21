@@ -54,6 +54,7 @@ var paths = {
 // HTML process
 gulp.task('html', function() {
     var htmlSrc = yeoman.dotSlash + yeoman.app + paths.html,
+<<<<<<< HEAD
         htmlDst = yeoman.dotSlash + yeoman.build ;
     
     console.log("html src = " + htmlSrc);
@@ -126,6 +127,77 @@ gulp.task('clean', function() {
 gulp.task('default', ['clean'], function(){
 //	 gulp.start('html','js');
     gulp.start('html','images','js', 'lib','css');
+=======
+        htmlDst = yeoman.dotSlash + yeoman.build + paths.html;
+
+    gulp.src(htmlSrc)
+        .pipe(livereload(server))
+        .pipe(gulp.dest(htmlDst))
+});
+
+// css process
+gulp.task('css', function () {
+    var cssSrc = yeoman.dotSlash + yeoman.app + paths.css,
+        cssDst = yeoman.dotSlash + yeoman.build + paths.css;
+
+    gulp.src(cssSrc)
+        .pipe(sass({ style: 'expanded'}))
+        .pipe(gulp.dest(cssDst))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(minifycss())
+        .pipe(livereload(server))
+        .pipe(gulp.dest(cssDst));
+});
+
+// image compass
+gulp.task('images', function(){
+    var imgSrc = yeoman.dotSlash + yeoman.app + paths.img ,  
+        imgDst = yeoman.dotSlash + yeoman.build + paths.img;
+    gulp.src(imgSrc)
+        .pipe(imagemin())
+        .pipe(livereload(server))
+        .pipe(gulp.dest(imgDst));
+})
+
+// js process
+gulp.task('js', function () {
+    var jsSrc = yeoman.dotSlash + yeoman.app + paths.js,
+        jsDst = yeoman.dotSlash + yeoman.build + paths.js;
+
+    gulp.src(jsSrc)
+//        .pipe(jshint('.jshintrc'))
+//        .pipe(jshint.reporter('default'))
+//        .pipe(concat('main.js'))
+        .pipe(gulp.dest(jsDst))
+        .pipe(rename({ suffix: '.min' }))
+//        .pipe(uglify())
+        .pipe(livereload(server))
+        .pipe(gulp.dest(jsDst))
+        .pipe(notify({ message: 'js task completed' }));
+});
+
+//copy lib js
+gulp.task('lib', function() {
+var vendorSrc = [yeoman.dotSlash + yeoman.app + '/' + paths.bower + '/angular/angular.js', yeoman.dotSlash + yeoman.app + '/' + paths.bower + '/angular-resource/angular-resource.js'],
+	vendorDst = yeoman.dotSlash + yeoman.build + paths.lib;
+gulp.src(vendorSrc)
+    .pipe(livereload(server))
+    .pipe(gulp.dest(vendorDst))
+});
+
+// clean image css and js
+gulp.task('clean', function() {
+    gulp.src([ yeoman.dotSlash + yeoman.build + paths.img , yeoman.dotSlash + yeoman.build + paths.js, 
+               yeoman.dotSlash + yeoman.build + paths.css,  yeoman.dotSlash + yeoman.build + paths.lib ], {read: false})
+        .pipe(clean())
+        .pipe(notify({ message: 'clean task completed' }));;
+});
+
+//  gulp
+gulp.task('default', ['clean'], function(){
+	
+    gulp.start('html','css','images','js', 'lib');
+>>>>>>> branch 'master' of https://github.com/Prussia/playJS
 });
 
 //  gulp watch
