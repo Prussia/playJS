@@ -19,6 +19,7 @@
 // gulp components
 var gulp    = require('gulp'),                 //basis
     imagemin = require('gulp-imagemin'),       //image compass
+    htmlmin = require('gulp-htmlmin'),
     sass = require('gulp-ruby-sass'),          //sass
     											//gulp-autoprefixer
     minifycss = require('gulp-clean-css'),    //css compass
@@ -128,6 +129,21 @@ gulp.task('default', ['clean'], function(){
 //	 gulp.start('html','js');
     gulp.start('html','images','js', 'lib','css');
 
+});
+
+//定义一个prod任务作为发布或者运行时使用
+gulp.task('prod',function(){
+//  gulp.run('buildlib','build-less','stylesheets','javascripts');
+//
+//  // 监听.less文件,一旦有变化,立刻调用build-less任务执行
+//  gulp.watch('./javis/static/less/*.less', ['build-less']);
+});
+
+//定义develop任务在日常开发中使用
+gulp.task('dev',function(){
+//  gulp.run('buildlib','build-less','javascripts','stylesheets');
+//
+//  gulp.watch('./javis/static/less/*.less', ['build-less']);
 });
 
 //  gulp watch
